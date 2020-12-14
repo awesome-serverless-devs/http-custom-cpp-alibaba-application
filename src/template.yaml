@@ -1,0 +1,32 @@
+MyFunctionDemo:
+  Component: fc
+  Provider: alibaba
+  Extends:
+    deploy:
+      - Hook: make build
+        Path: ./
+        Pre: true
+  Properties:
+    Region: cn-hangzhou
+    Service:
+      Name: custom-runtime-demo
+    Function:
+      Name: http-custom-cpp
+      CodeUri: ./bin
+      CAPort: 9000
+      Handler: http.handler
+      MemorySize: 512
+      Runtime: custom
+      Timeout: 60
+      Triggers:
+        - Name: http_t
+          Type: HTTP
+          Parameters:
+            AuthType: ANONYMOUS
+            Methods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            Domains:
+              - Domain: AUTO
